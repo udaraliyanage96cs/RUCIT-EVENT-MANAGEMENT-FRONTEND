@@ -6,12 +6,15 @@ import EventForm from "./components/EventForm.jsx"
 function App() {
 
   const [events , setEvents] = useState([]);
+  const [editEvent, setEditEvent] = useState(null);
 
   const fetchData = async () => {
     const result = await API.get("/events");
     console.log(result.data.events);
     setEvents(result.data.events);
   }
+
+ 
 
   useEffect(() =>{
     fetchData();
@@ -20,8 +23,10 @@ function App() {
 
   return (
     <>
-      <EventForm fetchData={fetchData}/>
-      <EventList events={events}/>
+      <EventForm fetchData={fetchData} setEditEvent={setEditEvent} editEvent={editEvent}/>
+      <EventList events={events} 
+      fetchData={fetchData}
+      setEditEvent={setEditEvent}/>
 
     </>
   )

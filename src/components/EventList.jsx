@@ -1,6 +1,13 @@
 import React from 'react'
+import API from '../api/api.js'
 
-function EventList({ events }) {
+function EventList({ events, fetchData, setEditEvent }) {
+    const deleteEvent = async (id) => {
+        if(confirm("Delete this event ?")){
+            await API.delete(`/delete/${id}`);
+            fetchData();
+        }
+    }
     return (
         <div>
             <div className="card">
@@ -17,10 +24,11 @@ function EventList({ events }) {
                                 <th scope="col">Time</th>
                                 <th scope="col">Location</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {events.length === 0 && <tr><td colSpan="5" className="text-center">No events available</td></tr>}
+                            {events.length === 0 && <tr><td colSpan="6" className="text-center">No events available</td></tr>}
                             {
                                 events.map((event) => (
                                     <tr key={event.id}>
@@ -29,6 +37,16 @@ function EventList({ events }) {
                                         <td>{event.event_time}</td>
                                         <td>{event.location}</td>
                                         <td>{event.status}</td>
+                                        <td>
+                                            <button className='btn btn-primary me-2' 
+                                            onClick={()=>setEditEvent(event)}>
+                                                Edit
+                                            </button>
+                                            <button className='btn btn-danger' 
+                                            onClick={()=>deleteEvent(event.id)}>
+                                                Delete
+                                            </button>
+                                        </td>
                                     </tr>
                                 ))
                             }
