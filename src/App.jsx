@@ -1,33 +1,29 @@
 import {useState, useEffect} from "react"
-import API from "./api/api.js"
-import EventList from "./components/EventList.jsx"
-import EventForm from "./components/EventForm.jsx"
+import Dashboard from './pages/Dashboard'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import NotFound from './pages/NotFound'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import PrivateRoute from './auth/PrivateRoute'
 
 function App() {
 
-  const [events , setEvents] = useState([]);
-  const [editEvent, setEditEvent] = useState(null);
-
-  const fetchData = async () => {
-    const result = await API.get("/events");
-    console.log(result.data.events);
-    setEvents(result.data.events);
-  }
-
- 
-
-  useEffect(() =>{
-    fetchData();
-  }, [])
-
-
   return (
     <>
-      <EventForm fetchData={fetchData} setEditEvent={setEditEvent} editEvent={editEvent}/>
-      <EventList events={events} 
-      fetchData={fetchData}
-      setEditEvent={setEditEvent}/>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register/>} />
+        <Route path="/" element={
+          <PrivateRoute>
+            <Dashboard/>
+          </PrivateRoute>
+          } />
+        <Route path="*" element={<NotFound/>} />
+      </Routes>
+    </BrowserRouter>
 
+      
     </>
   )
 }
