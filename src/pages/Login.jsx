@@ -18,9 +18,15 @@ export default function Login() {
 
         try {
             const res = await API.post("/login", form);
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("user", JSON.stringify(res.data.user));
-            navigate("/");
+            console.log("res",res);
+            if(res.data.token != undefined){
+                localStorage.setItem("token", res.data.token);
+                localStorage.setItem("user", JSON.stringify(res.data.user));
+                navigate("/");
+            }else{
+                alert(res.data.message);
+            }
+           
         } catch (error) {
             setError("Invalid email or password");
         }
