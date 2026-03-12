@@ -22,7 +22,12 @@ export default function Login() {
             if(res.data.token != undefined){
                 localStorage.setItem("token", res.data.token);
                 localStorage.setItem("user", JSON.stringify(res.data.user));
-                navigate("/");
+                console.log("usrr",res.data.user);
+                if(res.data.user.role === "admin"){
+                    navigate("/dashboard");
+                }else{
+                    navigate("/");
+                }
             }else{
                 alert(res.data.message);
             }

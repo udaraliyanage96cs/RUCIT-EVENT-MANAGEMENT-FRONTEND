@@ -1,8 +1,19 @@
 import {Navigate} from 'react-router-dom'
+import Unauthorized from '../pages/Unauthorized'
 
-const PrivateRoute = ({children}) => {
+const PrivateRoute = ({children, adminOnly = false}) => {
     const token = localStorage.getItem("token");
-    return token ? children : <Navigate to="/login" />;
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if(!token || !user){
+        return <Navigate to="/login" replace/>;
+    }
+    if(adminOnly && user.role !== "admin"){
+         return <Unauthorized/>;
+    }
+
+    return children;
+
 }
 
 export default PrivateRoute;
