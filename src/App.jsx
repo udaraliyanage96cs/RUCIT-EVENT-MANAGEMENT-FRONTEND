@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import PrivateRoute from './auth/PrivateRoute'
 import Home from './pages/Home'
+import MyEvents from './pages/MyEvents'
 
 function App() {
 
@@ -21,6 +22,10 @@ function App() {
             <Dashboard/>
           </PrivateRoute>
           } />
+
+        <Route path="/my-events" element={
+          <MyEvents/>
+        }/>
         <Route path="*" element={<NotFound/>} />
       </Routes>
     </BrowserRouter>
