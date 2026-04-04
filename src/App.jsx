@@ -7,6 +7,7 @@ import Register from './pages/Register'
 import PrivateRoute from './auth/PrivateRoute'
 import Home from './pages/Home'
 import MyEvents from './pages/MyEvents'
+import EventParticipants from './pages/EventParticipants'
 
 function App() {
 
@@ -22,6 +23,10 @@ function App() {
             <Dashboard/>
           </PrivateRoute>
           } />
+
+        <Route path="/dashboard/participants/:eventId" element={
+          <EventParticipants/>
+        }/>
 
         <Route path="/my-events" element={
           <MyEvents/>

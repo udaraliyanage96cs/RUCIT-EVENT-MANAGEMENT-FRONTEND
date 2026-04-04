@@ -1,7 +1,9 @@
 import React from 'react'
 import API from '../api/api.js'
+import {useNavigate} from 'react-router-dom'
 
 function EventList({ events, fetchData, setEditEvent }) {
+    const navigate = useNavigate();
     const deleteEvent = async (id) => {
         if(confirm("Delete this event ?")){
             await API.delete(`/delete/${id}`);
@@ -38,6 +40,9 @@ function EventList({ events, fetchData, setEditEvent }) {
                                         <td>{event.location}</td>
                                         <td>{event.status}</td>
                                         <td>
+                                            <button className='btn btn-success me-2' onClick={() => navigate(`/dashboard/participants/${event.id}`) }>
+                                                Participants
+                                            </button>
                                             <button className='btn btn-primary me-2' 
                                             onClick={()=>setEditEvent(event)}>
                                                 Edit

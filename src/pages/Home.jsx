@@ -23,7 +23,7 @@ export default function Home() {
                 if(token){
                     const myRes = await API.get('/my-events');
                     const ids = new Set(
-                        (myRes.data.registrations || []).map((r) => r.id)
+                        (myRes.data.registrations || []).map((r) => r.event_id )
                     )
                     setJoinedIds(ids);
                 }
@@ -96,7 +96,6 @@ export default function Home() {
                                             <div className={styles.card} key={index}>
                                                 <p><strong>{event.event_title}</strong></p>
                                                 <p>{event.description}</p>
-
                                                 {joinedIds.has(event.id) ? (
                                                     <button className='btn btn-danger' onClick={()=> handelLeave(event)}>Leave</button>
                                                 ): (
